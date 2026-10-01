@@ -9,7 +9,7 @@ from src.data import download_prices
 from src.features import FEATURE_COLUMNS, make_dataset
 
 TICKER = "SPY"
-START_DATE = "2010-01-01"
+START_DATE = "2005-01-01"
 TEST_FRACTION = 0.20
 
 
@@ -18,7 +18,7 @@ def main() -> None:
     dataset = make_dataset(prices)
     split_index = int(len(dataset) * (1 - TEST_FRACTION))
     train, test = dataset.iloc[:split_index], dataset.iloc[split_index:]
-    model = Pipeline([("scale", StandardScaler()), ("classifier", LogisticRegression(max_iter=2_000, class_weight="balanced"))])
+    model = Pipeline([("scale", StandardScaler()), ("classifier", LogisticRegression(max_iter=5_000, class_weight="balanced"))])
     model.fit(train[FEATURE_COLUMNS], train["regime"])
     predictions = model.predict(test[FEATURE_COLUMNS])
     print(f"Ticker: {TICKER}")

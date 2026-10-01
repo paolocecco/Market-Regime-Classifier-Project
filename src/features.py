@@ -22,5 +22,6 @@ def make_dataset(prices: pd.DataFrame, horizon: int = 10) -> pd.DataFrame:
     # This is the prediction target; all feature columns above use only past data.
     future_volatility = daily_returns.rolling(horizon).std().shift(-horizon)
     low_cut, high_cut = future_volatility.quantile([1 / 3, 2 / 3])
+    frame["future_volatility"] = future_volatility
     frame["regime"] = pd.cut(future_volatility, [-np.inf, low_cut, high_cut, np.inf], labels=["low", "medium", "high"])
     return frame.dropna(subset=FEATURE_COLUMNS + ["regime"])
