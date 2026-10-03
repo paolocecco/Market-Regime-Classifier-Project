@@ -3,6 +3,8 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline
+from sklearn.dummy import DummyClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 
 from src.data import download_prices
@@ -12,19 +14,26 @@ TICKER = "SPY"
 START_DATE = "2005-01-01"
 TEST_FRACTION = 0.20
 
+MODELS = {
+    "DummyClassifier": DummyClassifier(strategy="most_frequent"),
+    "LogisticRegression": Pipeline([("scale", StandardScaler()), ("classifier", LogisticRegression(max_iter=5_000, class_weight="balanced"))]),
+    "RandomForestClassifier": Pipeline([("scale", StandardScaler()), ("classifier", RandomForestClassifier(n_estimators=100, random_state=42))])
+}
+
 
 def main() -> None:
     prices = download_prices(TICKER, START_DATE)
     dataset = make_dataset(prices)
     split_index = int(len(dataset) * (1 - TEST_FRACTION))
     train, test = dataset.iloc[:split_index], dataset.iloc[split_index:]
-    model = Pipeline([("scale", StandardScaler()), ("classifier", LogisticRegression(max_iter=5_000, class_weight="balanced"))])
-    model.fit(train[FEATURE_COLUMNS], train["regime"])
-    predictions = model.predict(test[FEATURE_COLUMNS])
-    print(f"Ticker: {TICKER}")
-    print(f"Training: {train.index.min().date()} to {train.index.max().date()}")
-    print(f"Test: {test.index.min().date()} to {test.index.max().date()}\n")
-    print(classification_report(test["regime"], predictions, digits=3))
+    for model_name, model in MODELS.items():
+        model.fit(train[FEATURE_COLUMNS], train["regime"])
+        predictions = model.predict(test[FEATURE_COLUMNS])
+        print(f"Model: {model_name}")
+        print(f"Ticker: {TICKER}")
+        print(f"Training: {train.index.min().date()} to {train.index.max().date()}")
+        print(f"Test: {test.index.min().date()} to {test.index.max().date()}\n")
+        print(classification_report(test["regime"], predictions, digits=3))
 
 
 if __name__ == "__main__":
