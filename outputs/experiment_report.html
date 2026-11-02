@@ -1,0 +1,43 @@
+
+    <!doctype html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Experiment report: experiments</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 2rem; color: #1f2933; }
+          table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+          th, td { border: 1px solid #d9e2ec; padding: 0.5rem; text-align: left; font-size: 0.9rem; }
+          th { background: #f1f5f9; }
+          h1 { margin-bottom: 0.5rem; }
+        </style>
+      </head>
+      <body>
+        <h1>Experiment report: experiments</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Feature set</th>
+              <th>Phase</th>
+              <th>Fold</th>
+              <th>Accuracy</th>
+              <th>Balanced acc.</th>
+              <th>Macro F1</th>
+              <th>Weighted F1</th>
+              <th>Low F1</th>
+              <th>Medium F1</th>
+              <th>High F1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>LogisticRegression</td><td>all</td><td></td><td></td><td>0.5568</td><td>0.5660</td><td>0.5590</td><td>0.5644</td><td>0.4516</td><td>0.5489</td><td>0.6766</td></tr>
+<tr><td>RandomForestClassifier</td><td>all</td><td></td><td></td><td>0.5420</td><td>0.5528</td><td>0.5444</td><td>0.5459</td><td>0.4716</td><td>0.5252</td><td>0.6364</td></tr>
+<tr><td>HistGradientBoostingClassifier</td><td>all</td><td></td><td></td><td>0.4986</td><td>0.5177</td><td>0.4989</td><td>0.4981</td><td>0.4272</td><td>0.4664</td><td>0.6032</td></tr>
+<tr><td>KNeighborsClassifier</td><td>all</td><td></td><td></td><td>0.4488</td><td>0.4986</td><td>0.4525</td><td>0.4330</td><td>0.4521</td><td>0.3381</td><td>0.5673</td></tr>
+<tr><td>DummyClassifier</td><td>all</td><td></td><td></td><td>0.2327</td><td>0.3333</td><td>0.1258</td><td>0.0878</td><td>0.3775</td><td>0.0000</td><td>0.0000</td></tr>
+          </tbody>
+        </table>
+      </body>
+    </html>
+    
